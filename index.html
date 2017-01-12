@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<script src="node_modules/turbojs/turbo.js"></script>
+	</head>
+	<body style="background:grey">
+
+		<script id="shader-vs" type="x-shader/x-vertex">
+		  attribute vec4 aVertexPosition;
+		  attribute vec4 aVertexColor;
+		  attribute vec2 aTextureCoord;
+
+		  varying lowp vec4 vPosition;
+		  varying lowp vec2 vTexture;
+
+		  void main(void) {
+		  	gl_Position = vec4(aVertexPosition);
+		    vPosition = aVertexPosition;
+		    vTexture = aTextureCoord;
+		  }
+		</script>
+		<script id="shader-fs" type="x-shader/x-fragment">
+			varying lowp vec4 vPosition;
+			varying lowp vec2 vTexture;
+
+			uniform sampler2D uSampler;
+
+
+		    void main(void) {
+		        if (mod(gl_FragCoord.x,2.0) > .5 || mod(gl_FragCoord.y,2.0) > .5) {
+		        	//discard;
+		        }
+
+		        gl_FragColor = texture2D(uSampler, vec2(gl_FragCoord[0] / 10.0, gl_FragCoord[1]));
+		        gl_FragColor = vec4(0.1,0.1,0.1,1.0);
+		    }
+		</script>
+
+
+
+
+		<script src="index.js"></script>
+	</body>
+</html>
